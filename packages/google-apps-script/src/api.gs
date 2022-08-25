@@ -1,11 +1,34 @@
-function doGet(e) {
-  var params = JSON.stringify(e);
+const getRootFiles = () => {
+  const q = `"root" in parents and trashed = false and
+  mimeType != "application/vnd.google-apps.folder"`;
+  const maxResults = 100;
+  const filesArray = [];
+  let pageToken = null;
 
-  return HtmlService.createHtmlOutput(params);
-  // var files = DriveApp.getFiles();
+  do {
+    try {
+      const { items, nextPageToken } = Drive.Files.list({
+        q,
+        maxResults,
+        pageToken,
+      });
 
-  // while (files.hasNext()) {
-  //   var file = files.next();
-  //   Logger.log(file.getName());
-  // }
-}
+      if (!items || items.length === 0) {
+        break;
+      }
+
+      filesArray.push.apply(
+        filesArray,
+        items.filter(
+          ({ mimeType }) => mimeType !== 'application/vnd.google-apps.script'
+        )
+      );
+
+      pageToken = nextPageToken;
+    } catch (err) {
+      Logger.log('Failed with error %s', err.message);
+    }
+  } while (pageToken);
+
+  return filesArray;
+};
