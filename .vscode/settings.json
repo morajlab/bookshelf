@@ -1,0 +1,7 @@
+{
+  "files.autoSave": "off",
+  "files.associations": {
+    "*.gs": "javascript"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
