@@ -119,3 +119,21 @@ const manageRootDirectories = () => {
     }
   });
 };
+
+const arrangeDocuments = () => {
+  getRootDocuments().forEach(({ title }) => {
+    const firstChar = title[0];
+
+    if (/[A-Za-z]/.test(firstChar)) {
+      // TODO: move to related directory
+      return;
+    }
+
+    if (/\d/.test(firstChar)) {
+      // TODO: move to '123' directory
+      return;
+    }
+
+    // TODO: move to 'persian' directory
+  });
+};
