@@ -24,4 +24,9 @@ if [ ! -d "$project_path" ]; then
   exit 1
 fi
 
+# NOTE: This section is temporary
+# clasp run doesn't use ~/.clasprc.json and requires .clasprc.json in local directory
+# https://github.com/google/clasp/issues/916
+cp $HOME/.clasprc.json $project_path
+
 $ROOT_PATH/node_modules/.bin/clasp "${args[@]}" -P $project_path
