@@ -1,0 +1,18 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/google-drive-apps-script/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "command": "./scripts/build.ts",
+        "cwd": "packages/google-drive-apps-script",
+        "outputPath": "packages/google-drive-apps-script/dist",
+        "main": "packages/google-drive-apps-script/src/api.ts"
+      }
+    }
+  },
+  "tags": []
+}
