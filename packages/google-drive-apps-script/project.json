@@ -12,6 +12,14 @@
         "outputPath": "packages/google-drive-apps-script/dist",
         "main": "packages/google-drive-apps-script/src/api.ts"
       }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/google-drive-apps-script"],
+      "options": {
+        "jestConfig": "packages/google-drive-apps-script/jest.config.cjs",
+        "passWithNoTests": true
+      }
     }
   },
   "tags": []
