@@ -50,6 +50,14 @@ type GetRootDirectoriesFunc = (
   query?: IGetFilesFuncProps['query']
 ) => ReturnType<GetFilesFunc>;
 
+interface IMoveFileProps {
+  file: GoogleAppsScript.Drive.Schema.File;
+  dest: string;
+}
+type MoveFileFunc = (
+  params: IMoveFileProps
+) => GoogleAppsScript.Drive.Schema.File;
+
 class DriveFile {
   public static getFiles: GetFilesFunc = (params) => {
     const GetFilesDefProps: IGetFilesFuncProps = {
@@ -104,6 +112,17 @@ class DriveFile {
       }"root" in parents and trashed = false`,
       type: FileType.DIRECTORY,
     });
+
+  public static moveFile: MoveFileFunc = ({ file, dest }) => {
+    const parentDirectory = this.getRootDirectories().filter(
+      ({ title }) => title === dest
+    )[0];
+
+    return Drive.Files.patch(file, file.id, {
+      addParents: parentDirectory.id,
+      removeParents: file.parents.map(({ id }) => id).join(),
+    });
+  };
 }
 
 class FileManager {
@@ -142,20 +161,26 @@ class FileManager {
   };
 
   public static arrangeDocuments = () => {
-    DriveFile.getRootDocuments().forEach(({ title }) => {
-      const firstChar = title[0];
+    DriveFile.getRootDocuments().forEach((file) => {
+      const firstChar = file.title[0];
 
       if (/[A-Za-z]/.test(firstChar)) {
-        // TODO: move to related directory
+        DriveFile.moveFile({ file, dest: firstChar.toLowerCase() });
+
         return;
       }
 
       if (/\d/.test(firstChar)) {
-        // TODO: move to '123' directory
+        DriveFile.moveFile({ file, dest: '123' });
+
         return;
       }
 
-      // TODO: move to 'persian' directory
+      DriveFile.moveFile({ file, dest: 'persian' });
     });
   };
 }
+
+const main = () => {
+  FileManager.arrangeDocuments();
+};
