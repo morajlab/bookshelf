@@ -1,3 +1,5 @@
+import { FileType } from '../FileTypeEnum';
+
 export interface IGetFilesFuncProps {
   query?: string;
   type?: FileType;

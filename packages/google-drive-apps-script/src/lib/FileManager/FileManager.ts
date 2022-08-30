@@ -1,4 +1,5 @@
 import { DriveFile } from '../DriveFile/DriveFile';
+import { ROOT_DIRECTORIES_ARRAY } from '../../root-directories';
 
 export class FileManager {
   public static manageRootDirectories = () => {

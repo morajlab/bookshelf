@@ -1,3 +1,4 @@
+import { FileType } from '../FileTypeEnum';
 import type {
   GetFilesFunc,
   IGetFilesFuncProps,
