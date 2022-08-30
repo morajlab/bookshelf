@@ -24,3 +24,5 @@ const doGet = ({ parameter }: any) => {
 
   return output;
 };
+
+global.doGet = doGet;

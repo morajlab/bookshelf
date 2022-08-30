@@ -7,7 +7,7 @@
       "executor": "nx:run-commands",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "command": "./scripts/build.ts",
+        "command": "webpack --mode production",
         "cwd": "packages/google-drive-apps-script",
         "outputPath": "packages/google-drive-apps-script/dist",
         "main": "packages/google-drive-apps-script/src/api.ts"
