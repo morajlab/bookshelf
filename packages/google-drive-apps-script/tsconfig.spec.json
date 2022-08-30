@@ -5,5 +5,12 @@
     "module": "commonjs",
     "types": ["jest", "node", "google-apps-script"]
   },
-  "include": ["jest.config.ts", "spec", "**/*.d.ts", "**/*.types.ts"]
+  "include": [
+    "jest.config.ts",
+    "spec",
+    "**/*.d.ts",
+    "**/*.types.ts",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }
