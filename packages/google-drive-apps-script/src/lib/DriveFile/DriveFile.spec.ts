@@ -1,10 +1,17 @@
+import { createHash } from 'crypto';
 import { DriveFile } from '.';
 import { FileType } from '../FileTypeEnum';
 import type { IGetFilesFuncProps } from '.';
 
 const mockListFunction = jest
   .fn()
-  .mockReturnValue({ nextPageToken: null, items: null })
+  .mockReturnValue({
+    nextPageToken: null,
+    items: Array.from([1, 2, 3], (key) => ({
+      id: createHash('sha256').digest('hex'),
+      title: `file_${key}`,
+    })),
+  })
   .mockReturnValueOnce({ nextPageToken: null, items: null })
   .mockReturnValueOnce({ nextPageToken: null, items: [] });
 
@@ -37,12 +44,16 @@ it('Test DriveFile class', () => {
   };
   expect(DriveFile.getFiles(call_2_args)).toEqual([]);
 
-  expect(DriveFile.getFiles()).toEqual([]);
+  expect(DriveFile.getFiles()).not.toEqual([]);
 
   // Test mocked function arguments
   expect(mockListFunction.mock.calls[0][0]).toEqual({
     ...list_call_default_args,
     ...{ maxResults: 300 },
   });
-  expect(mockListFunction.mock.calls[1][0]).toEqual(list_call_default_args);
+  expect(mockListFunction.mock.calls[1][0]).toEqual({
+    ...list_call_default_args,
+    ...{ q: 'mimeType = "application/vnd.google-apps.folder"' },
+  });
+  expect(mockListFunction.mock.calls[2][0]).toEqual(list_call_default_args);
 });

@@ -14,10 +14,15 @@ export class DriveFile {
       maxResults: 100,
       filterCallback: () => true,
     };
-    const { query, type, maxResults, filterCallback } = {
+    const _params = {
       ...GetFilesDefProps,
       ...params,
     };
+    const { query, type, maxResults, filterCallback } = {
+      ..._params,
+      ...{ query: _params?.query ? _params.query.trim() : null },
+    };
+
     const q: string = `${query ? `${query} and ` : ''}mimeType ${
       type === FileType.FILE ? '!' : ''
     }= "application/vnd.google-apps.folder"`;
