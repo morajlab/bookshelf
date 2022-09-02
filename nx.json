@@ -12,5 +12,19 @@
         "cacheableOperations": ["build", "lint", "test", "e2e"]
       }
     }
-  }
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "@emotion/styled",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "web-client-web-client"
 }

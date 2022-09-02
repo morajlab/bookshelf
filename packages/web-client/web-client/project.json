@@ -1,0 +1,64 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/web-client/web-client",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "root": "packages/web-client/web-client",
+        "outputPath": "dist/packages/web-client/web-client"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "packages/web-client/web-client"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "web-client-web-client:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "web-client-web-client:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "web-client-web-client:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nrwl/next:export",
+      "options": {
+        "buildTarget": "web-client-web-client:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/web-client/web-client"],
+      "options": {
+        "jestConfig": "packages/web-client/web-client/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/web-client/web-client/**/*.{ts,tsx,js,jsx}"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
